@@ -1,0 +1,29 @@
+.weather-main{
+
+    margin-top: -3em;
+
+    svg {
+        color: #8f98cc;
+        margin-right: 0.4em;
+    }
+
+    ul {
+        display: flex;
+        font-size: 1.4rem;
+
+        li {
+            list-style: none;
+            display: inline-block;
+            margin-right: 1.5em;
+            
+            span {
+                color: #ddd;
+            }
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+        }
+    }
+    
+}

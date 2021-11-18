@@ -7,5 +7,17 @@ I did not use any state management libraries at the time so I used prop drilling
 Sensitive data is hidden using Netlify lambda functions.  
 </br>
 The app itself is deployed [here](https://forecastbyroly.netlify.app/).  
+
+## Usage
+First, install the necessary packages
+```bash
+npm install
+```
+
+Run the development server using
+```bash
+npm run start
+```  
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

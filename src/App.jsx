@@ -44,11 +44,6 @@ export default function App(props) {
 
   useEffect(() => {
     switch (currentHref) {
-      case "/home":
-        setdescription(
-          "Fetches unit settings from /location page as well as requests user location and sets the right units for the fetched hourly and daily forecast."
-        );
-        break;
       case "/saved":
         setdescription(
           "Uses Google places autocomplete library to conveniently add locations. Coordinates of each one of those are stored in LocalStorage."
@@ -58,6 +53,11 @@ export default function App(props) {
       case "/location":
         setdescription(
           "Displays user location, basic weather information and allows to set units that are convenient for the user."
+        );
+        break;
+      default:
+        setdescription(
+          "Fetches unit settings from /location page as well as requests user location and sets the right units for the fetched hourly and daily forecast."
         );
         break;
     }
@@ -158,19 +158,19 @@ export default function App(props) {
                 <div className="navigation">
                   <Link to="/home">
                     <FontAwesomeIcon
-                      className={currentHref == "/home" ? "activeTab" : ""}
+                      className={currentHref === "/home" ? "activeTab" : ""}
                       icon={faHome}
                     />
                   </Link>
                   <Link to="/saved">
                     <FontAwesomeIcon
-                      className={currentHref == "/saved" ? "activeTab" : ""}
+                      className={currentHref === "/saved" ? "activeTab" : ""}
                       icon={faHeart}
                     />
                   </Link>
                   <Link to="/location">
                     <FontAwesomeIcon
-                      className={currentHref == "/location" ? "activeTab" : ""}
+                      className={currentHref === "/location" ? "activeTab" : ""}
                       icon={faMapMarkerAlt}
                     />
                   </Link>

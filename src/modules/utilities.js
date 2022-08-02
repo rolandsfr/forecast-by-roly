@@ -20,7 +20,7 @@ export function transformUnit(type, baseUnit, newUnit) {
         result = Math.round(1.8 * (baseUnit - 273) + 32) + "°F";
         break;
 
-      case "Kelvin":
+      default:
         result = Math.round(baseUnit) + "°K";
         break;
     }
@@ -30,7 +30,7 @@ export function transformUnit(type, baseUnit, newUnit) {
         result = Math.round(baseUnit * 3.6) + "km/h";
         break;
 
-      case "mph":
+      default:
         result = Math.round(baseUnit * 2.237) + "mph";
         break;
     }
@@ -44,7 +44,7 @@ export function transformUnit(type, baseUnit, newUnit) {
         result = Math.round(baseUnit * 0.0145037738) + " psi";
         break;
 
-      case "kPa":
+      default:
         result = Math.round(baseUnit / 10) + "kPa";
         break;
     }

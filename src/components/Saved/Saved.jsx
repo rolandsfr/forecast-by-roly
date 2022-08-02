@@ -76,7 +76,6 @@ export default function Saved(props) {
           temperature,
           wind,
           humidity: weather.main.humidity,
-          wind,
           id: weather.weather[0].id,
           index: index.current++,
           lat,
@@ -103,14 +102,14 @@ export default function Saved(props) {
   const dropdown = useRef(null);
 
   function removeCard(index) {
-    const card = favorites.current.find((fav) => fav.index == index);
+    const card = favorites.current.find((fav) => fav.index === index);
 
     coordinates.current = coordinates.current.filter(
       (place) => place.lat !== card.lat && place.lng !== card.lng
     );
     // console.log(card)
 
-    favorites.current = favorites.current.filter((fav) => fav.index != index);
+    favorites.current = favorites.current.filter((fav) => fav.index !== index);
     setCurrentFavorites([...favorites.current]);
 
     localStorage.setItem("locations", JSON.stringify(coordinates.current));

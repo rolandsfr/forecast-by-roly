@@ -135,7 +135,7 @@ export default function Location(props) {
           <Setting
             name="Temeperature"
             type="temperature"
-            units={["Celcius", "Farenheit", "Kelvin"]}
+            units={["Celcius", "Fahrenheit", "Kelvin"]}
             setWeatherPieces={setWeatherPieces}
             active={settings.temperature}
           />

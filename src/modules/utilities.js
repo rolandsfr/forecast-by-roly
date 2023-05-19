@@ -2,6 +2,8 @@
 const API_KEY = process.env.REACT_APP_GOOGLE_PLACES;
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER;
 
+console.log(WEATHER_API_KEY);
+
 export const KEYS = {
   API_KEY,
   WEATHER_API_KEY,

@@ -70,7 +70,6 @@ export default function Home(props) {
       )
         .then((resp) => resp.json())
         .then((res) => {
-          console.log(res);
           setForecast(res);
         });
     } else {

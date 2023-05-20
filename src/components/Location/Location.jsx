@@ -35,6 +35,7 @@ export default function Location(props) {
     pressure: 0,
     state: "Fetching...",
   });
+  const [loaded, setloaded] = useState(false);
 
   let initialSettings = JSON.parse(localStorage.getItem("settings"));
   if (!initialSettings)
@@ -64,6 +65,7 @@ export default function Location(props) {
     auth = true;
     props.getData(settings);
     setNav(props.location.pathname);
+    setloaded(true);
   }, []);
 
   function getLocation() {
@@ -102,18 +104,20 @@ export default function Location(props) {
     });
   }
 
-  function getCoords(pos) {
+  async function getCoords(pos) {
     let { latitude, longitude } = pos.coords;
-    getLocationAsText(latitude, longitude).then((res) => {
+    return getLocationAsText(latitude, longitude).then((res) => {
       setLocation(res);
 
       if (auth) {
         auth = false;
 
-        fetchWeather(latitude, longitude).then((weather) => {
+        return fetchWeather(latitude, longitude).then((weather) => {
           updateWeather(weather);
         });
       }
+
+      return res;
     });
   }
 
@@ -156,7 +160,7 @@ export default function Location(props) {
         </div>
       </div>
 
-      <Preloader states={[location, weather]} />
+      <Preloader loaded={loaded} />
     </div>
   );
 }

@@ -34,6 +34,7 @@ export default function Saved(props) {
   const [fading, setfading] = useState(true);
   const [visible, setvisible] = useState(false);
   const coordinates = useRef([]);
+  const [loaded, setloaded] = useState(false);
 
   const setNav = useContext(NavContext);
 
@@ -50,17 +51,25 @@ export default function Saved(props) {
   useEffect(() => {
     const coords = JSON.parse(localStorage.getItem("locations")) || [];
     if (coords.length) {
+      const promises = [];
+
       coords.forEach((place) => {
-        updateCards(place.lat, place.lng);
+        promises.push(updateCards(place.lat, place.lng));
       });
+
+      Promise.all(promises).then(() => {
+        setloaded(true);
+      });
+    } else {
+      setloaded(true);
     }
 
     setNav(props.location.pathname);
   }, []);
 
-  function updateCards(lat, lng) {
-    fetchWeather(lat, lng).then((weather) => {
-      getLocationAsText(lat, lng, false, true).then((namedLocation) => {
+  async function updateCards(lat, lng) {
+    return fetchWeather(lat, lng).then((weather) => {
+      return getLocationAsText(lat, lng, false, true).then((namedLocation) => {
         const [city, country] = namedLocation;
         // set the right units
         let temperature = transformUnit(
@@ -86,6 +95,8 @@ export default function Saved(props) {
         localStorage.setItem("locations", JSON.stringify(coordinates.current));
 
         setCurrentFavorites([...favorites.current]);
+
+        return namedLocation;
       });
     });
   }
@@ -219,7 +230,7 @@ export default function Saved(props) {
         </div>
       </div>
 
-      <Preloader states={currentFavorites} />
+      <Preloader loaded={loaded} />
     </div>
   );
 }

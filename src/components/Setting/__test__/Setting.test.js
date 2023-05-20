@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, cleanup } from "@testing-library/react";
 import Setting from "../Setting";
 
 const settingData = {
@@ -13,6 +13,7 @@ const settingData = {
 describe("Setting", () => {
   afterEach(() => {
     jest.clearAllMocks();
+    cleanup();
   });
 
   it("Changes a unit of measure to the following when an arrow is clicked", () => {

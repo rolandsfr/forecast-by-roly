@@ -51,9 +51,6 @@ export default function Home(props) {
   useEffect(() => {
     getLocation(getCoords);
     props.returnDate(settings);
-
-    setloaded(true);
-
     setNav(props.location.pathname);
 
     return function cleanup() {
@@ -61,7 +58,7 @@ export default function Home(props) {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     returnHourlyForecast(forecast);
     returnDailyForecast(forecast);
   }, [forecast]);
@@ -170,38 +167,45 @@ export default function Home(props) {
     getLocationAsText(latitude, longitude, true).then((res) => {
       setLocation(res);
 
-      fetchWeather(latitude, longitude).then((weather) => {
-        // set the right units
-        let temperature = transformUnit(
-          "temperature",
-          weather.main.feels_like,
-          settings.temperature
-        ).replace(/[a-zA-Z]/g, "");
-        let wind = transformUnit("speed", weather.wind.speed, settings.speed);
-        let pressure = transformUnit(
-          "pressure",
-          weather.main.pressure,
-          settings.pressure
-        );
+      const weatherPromise = fetchWeather(latitude, longitude).then(
+        (weather) => {
+          //TODO: await
+          // set the right units
+          let temperature = transformUnit(
+            "temperature",
+            weather.main.feels_like,
+            settings.temperature
+          ).replace(/[a-zA-Z]/g, "");
+          let wind = transformUnit("speed", weather.wind.speed, settings.speed);
+          let pressure = transformUnit(
+            "pressure",
+            weather.main.pressure,
+            settings.pressure
+          );
 
-        // rerender weather units
-        setWeather({
-          wind,
-          temperature,
-          humidity: weather.main.humidity,
-          pressure,
-          state:
-            weather.weather[0].description[0].toUpperCase() +
-            weather.weather[0].description.slice(1),
-        });
+          // rerender weather units
+          setWeather({
+            wind,
+            temperature,
+            humidity: weather.main.humidity,
+            pressure,
+            state:
+              weather.weather[0].description[0].toUpperCase() +
+              weather.weather[0].description.slice(1),
+          });
 
-        setSunTime({
-          sunrise: formatAMPM(new Date(weather.sys.sunrise * 1000)),
-          sunset: formatAMPM(new Date(weather.sys.sunset * 1000)),
-        });
+          setSunTime({
+            sunrise: formatAMPM(new Date(weather.sys.sunrise * 1000)),
+            sunset: formatAMPM(new Date(weather.sys.sunset * 1000)),
+          });
+        }
+      );
+
+      const forecastPromise = fetchForecast(latitude, longitude);
+
+      Promise.all([weatherPromise, forecastPromise]).then(() => {
+        setloaded(true);
       });
-
-      fetchForecast(latitude, longitude);
     });
   }
 
@@ -258,7 +262,7 @@ export default function Home(props) {
         </div>
       </div>
 
-      <Preloader states={(loaded, dailyForecast, hourlyForecast)} />
+      <Preloader loaded={loaded} />
     </div>
   );
 }

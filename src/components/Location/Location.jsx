@@ -156,7 +156,7 @@ export default function Location(props) {
         </div>
       </div>
 
-      <Preloader states={(location, weather)} />
+      <Preloader states={[location, weather]} />
     </div>
   );
 }

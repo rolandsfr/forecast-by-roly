@@ -1,27 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react";
 
-function Preloader({states}) {
-    const [fading, setFading] = useState(false)
-    const [hidden, setHidden] = useState(false)
+function Preloader({ loaded }) {
+  const [fading, setFading] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const isInitialMount = useRef(true);
 
-    function hideLoading() {
-        setFading(true)
-        setTimeout(() => setHidden(true), 600)
+  function hideLoading() {
+    setFading(true);
+    setTimeout(() => setHidden(true), 600);
+  }
+
+  useEffect(() => {
+    if (loaded) {
+      setTimeout(() => hideLoading(), 100);
     }
+  }, [loaded]);
 
-    if(states) {
-        setTimeout(() => hideLoading(), 300)
-    }
-
-    
-
-    return (
-        <div className="loading" style={{
-            opacity: fading ? 0 : 1,
-            display: hidden ? "none" : "flex"}}>
-            <div className="preloader"></div>
-        </div>
-    )
+  return (
+    <div
+      className="loading"
+      style={{
+        opacity: fading ? 0 : 1,
+        display: hidden ? "none" : "flex",
+      }}
+      data-testid="preloader"
+    >
+      <div className="preloader"></div>
+    </div>
+  );
 }
 
 export default Preloader;

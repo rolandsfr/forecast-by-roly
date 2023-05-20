@@ -20,7 +20,7 @@ export default function Setting(props) {
           icon={faChevronRight}
           onClick={() => {
             index.current += 1;
-            if (index.current === props.units.length) index.current = 0;
+            if (index.current == props.units.length) index.current = 0;
 
             setUnit(props.units[index.current]);
             props.setWeatherPieces({

@@ -2,8 +2,6 @@
 const API_KEY = process.env.REACT_APP_GOOGLE_PLACES;
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER;
 
-console.log(WEATHER_API_KEY);
-
 export const KEYS = {
   API_KEY,
   WEATHER_API_KEY,
@@ -18,7 +16,7 @@ export function transformUnit(type, baseUnit, newUnit) {
         result = Math.round(baseUnit - 273.15) + "°C";
         break;
 
-      case "Farenheit":
+      case "Fahrenheit":
         result = Math.round(1.8 * (baseUnit - 273) + 32) + "°F";
         break;
 
@@ -91,7 +89,7 @@ export function getLocationAsText(
     });
 }
 
-export function fetchWeather(lat, long) {
+export async function fetchWeather(lat, long) {
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${WEATHER_API_KEY}`
   )

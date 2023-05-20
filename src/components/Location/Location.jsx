@@ -64,7 +64,6 @@ export default function Location(props) {
     getLocation(getCoords);
     auth = true;
     props.getData(settings);
-    setNav(props.location.pathname);
     setloaded(true);
   }, []);
 
@@ -85,6 +84,7 @@ export default function Location(props) {
       weather.main.feels_like,
       settings.temperature
     );
+
     let wind = transformUnit("speed", weather.wind.speed, settings.speed);
     let pressure = transformUnit(
       "pressure",

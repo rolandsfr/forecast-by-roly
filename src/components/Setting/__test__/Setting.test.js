@@ -1,5 +1,11 @@
 import "@testing-library/jest-dom";
-import { render, fireEvent, screen, cleanup } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  screen,
+  cleanup,
+  waitFor,
+} from "@testing-library/react";
 import Setting from "../Setting";
 
 const settingData = {
